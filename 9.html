@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="eu"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ondorioa eta Baliabide Gehigarriak</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0; /* Gorputzaren marjina lehenetsia kentzen du */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f7f7fc 0%, #e8e6ff 100%);
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .title {
+            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .concept-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex; /* Flexbox gehitu edukia bertikalki zentratzeko */
+            flex-direction: column; /* Edukia bertikalki pilatzeko */
+            justify-content: space-between; /* Espazioa banatzeko */
+            height: 100%; /* Altuera berdina ziurtatzeko */
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        .resource-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            display: flex; /* Flexbox gehitu edukia bertikalki zentratzeko */
+            flex-direction: column; /* Edukia bertikalki pilatzeko */
+            height: 100%; /* Altuera berdina ziurtatzeko */
+        }
+        .resource-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px; /* Emojien tamaina handitu */
+            flex-shrink: 0; /* Ikonoa ez txikitzeko */
+        }
+        .tip-card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex; /* Flexbox gehitu edukia bertikalki zentratzeko */
+            flex-direction: column; /* Edukia bertikalki pilatzeko */
+            height: 100%; /* Altuera berdina ziurtatzeko */
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-6">
+        <h1 class="title text-4xl font-bold mb-4 text-center">Ondorioa eta Baliabide Gehigarriak</h1> <div class="mb-6 w-full max-w-5xl"> <h2 class="text-2xl font-bold mb-3 text-center text-blue-700">Estatistikako Gako-kontzeptuak</h2> <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"> <div class="concept-card p-3 text-center">
+                    <div class="icon-circle bg-blue-100 mb-2 mx-auto">🧑‍🤝‍🧑</div>
+                    <div>
+                        <h3 class="font-bold text-blue-700">Populazioa eta Lagina</h3> <p class="text-xs mt-1">Multzo osoa eta aztertzen dugun zatia</p> </div>
+                </div>
+                
+                <div class="concept-card p-3 text-center">
+                    <div class="icon-circle bg-green-100 mb-2 mx-auto">🏷️</div>
+                    <div>
+                        <h3 class="font-bold text-green-700">Aldagaiak</h3> <p class="text-xs mt-1">Kualitatiboak, kuantitatibo diskretuak eta jarraituak</p> </div>
+                </div>
+                
+                <div class="concept-card p-3 text-center">
+                    <div class="icon-circle bg-indigo-100 mb-2 mx-auto">📋</div>
+                    <div>
+                        <h3 class="font-bold text-indigo-700">Taulak</h3> <p class="text-xs mt-1">Maiztasun absolutuak, erlatiboak eta metatuak</p> </div>
+                </div>
+                
+                <div class="concept-card p-3 text-center">
+                    <div class="icon-circle bg-purple-100 mb-2 mx-auto">📊</div>
+                    <div>
+                        <h3 class="font-bold text-purple-700">Grafikoak</h3> <p class="text-xs mt-1">Barra-diagramak eta sektore-diagramak</p> </div>
+                </div>
+                
+                <div class="concept-card p-3 text-center">
+                    <div class="icon-circle bg-amber-100 mb-2 mx-auto">🧮</div>
+                    <div>
+                        <h3 class="font-bold text-amber-700">Neurriak</h3> <p class="text-xs mt-1">Batez bestekoa, mediana, moda eta heina</p> </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-6 w-full max-w-5xl"> <h2 class="text-2xl font-bold mb-3 text-center text-blue-700">Baliabide Gehigarriak</h2> <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"> <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">🎓</span>
+                        <h3 class="font-bold">Khan Academy</h3>
+                    </div>
+                    <p class="text-sm mb-2">Estatistikako gai guztiei buruzko bideo argigarriak eta ariketa interaktiboak.</p> <a href="https://eu.khanacademy.org/math/statistics-probability" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">eu.khanacademy.org</a> </div>
+                
+                <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">📈</span>
+                        <h3 class="font-bold">GeoGebra</h3>
+                    </div>
+                    <p class="text-sm mb-2">Grafiko estatistikoak sortzeko eta datuak aztertzeko tresna interaktiboa.</p> <a href="https://www.geogebra.org/t/statistics" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">www.geogebra.org</a>
+                </div>
+                
+                <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">👩‍🏫</span>
+                        <h3 class="font-bold">Superprof</h3>
+                    </div>
+                    <p class="text-sm mb-2">DBHko 1. mailan estatistika lantzeko ebatzitako ariketak eta ariketa interaktiboak.</p> <a href="https://www.superprof.es/apuntes/escolar/matematicas/estadistica/" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">www.superprof.es</a>
+                </div>
+                
+                <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">🌐</span>
+                        <h3 class="font-bold">Hezkuntza Baliabideak</h3> </div>
+                    <p class="text-sm mb-2">DBHrako matematikako jarduera interaktiboak dituen ataria.</p> <a href="http://www3.gobiernodecanarias.org/medusa/ecoescuela/secundaria/category/matematicas/" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">www3.gobiernodecanarias.org</a>
+                </div>
+                
+                <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">📚</span>
+                        <h3 class="font-bold">Marea Berdea Apunteak</h3> </div>
+                    <p class="text-sm mb-2">Estatistikako teoria eta ariketak dituzten doako testuliburuak PDF formatuan.</p> <a href="http://www.apuntesmareaverde.org.es/" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">www.apuntesmareaverde.org.es</a>
+                </div>
+                
+                <div class="resource-card p-4">
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">🎬</span>
+                        <h3 class="font-bold">Hezkuntza Bideoak</h3> </div>
+                    <p class="text-sm mb-2">Oinarrizko estatistikari buruzko azalpen argiak dituzten YouTube kanalak.</p> <a href="https://www.youtube.com/results?search_query=estadistica+basica+euskera" class="text-sm text-blue-600 hover:underline mt-auto" target="_blank">YouTube (bilaketa euskaraz)</a> </div>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-5xl"> <h2 class="text-2xl font-bold mb-3 text-center text-blue-700">Estatistika Ikasteko Aholkuak</h2> <div class="grid grid-cols-1 md:grid-cols-3 gap-4"> <div class="tip-card bg-blue-50 p-3">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xl mr-2">💡</span>
+                        <h3 class="font-bold text-blue-800">Erabili eguneroko adibideak</h3> </div>
+                    <p class="text-xs">Estatistika edonon dago: kiroletan, albisteetan, sare sozialetan. Bilatu adibideak zure eguneroko bizitzan.</p> </div>
+                
+                <div class="tip-card bg-green-50 p-3">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xl mr-2">🔄</span>
+                        <h3 class="font-bold text-green-800">Praktikatu urratsez urrats</h3> </div>
+                    <p class="text-xs">Bildu datuak, antolatu tauletan, irudikatu grafikoki eta kalkulatu neurriak prozesu osoa ulertzeko.</p> </div>
+                
+                <div class="tip-card bg-purple-50 p-3">
+                    <div class="flex items-center mb-2">
+                        <span class="text-xl mr-2">🧩</span>
+                        <h3 class="font-bold text-purple-800">Lan egin taldean</h3> </div>
+                    <p class="text-xs">Taldean inkestak egiteak eta emaitzak elkarrekin aztertzeak ikaskuntza dibertigarriagoa eta esanguratsuagoa egiten du.</p> </div>
+            </div>
+        </div>
+        
+        <div class="mt-6 bg-blue-100 rounded-lg p-4 flex items-center w-full max-w-5xl"> <span class="text-3xl mr-4">🎯</span>
+            <div>
+                <h3 class="text-lg font-bold text-blue-800">Gogoratu!</h3> <p class="text-sm">Estatistika datuen bidez inguratzen gaituen mundua ulertzeko tresna bat da. Ez da soilik formulak ikastea, baizik eta informazioa interpretatzea eta erabaki informatuak hartzea.</p> </div>
+        </div>
+    </div>
+    <div class="fixed bottom-0 left-0 right-0 flex justify-start p-4 bg-gray-100 bg-opacity-80 shadow-inner z-20">
+        <a href="8.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Aurrekoa </a>
+    </div>
+</body>
+</html>

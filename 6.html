@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="eu"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafiko Estatistikoak</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0; /* Ensure no default body margin */
+            padding: 0; /* Ensure no default body padding */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #dbeafe 100%);
+            /* Removed flex centering from body */
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; /* Let flex-grow handle spacing */
+            align-items: center;
+            padding: 2rem;
+        }
+        .title {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 280px; /* Doitu altuera behar izanez gero */
+            position: relative;
+        }
+        .info-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+        .icon-header {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .comparison-table td, .comparison-table th { /* th ere gehitu estiloetarako */
+            padding: 8px;
+            border: 1px solid #e5e7eb; /* Ertzak gehitu argitasunerako */
+        }
+        .comparison-table th { /* Goiburukoentzako estilo espezifikoa */
+            background-color: #e0e7ff; /* Atzeko plano argiagoa */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-6">
+        <h1 class="title text-4xl font-bold mb-4 text-center">Grafiko Estatistikoak</h1> <h2 class="text-xl text-indigo-600 mb-6 text-center">Barra-diagramak eta Sektore-diagramak</h2> <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> <div class="space-y-4">
+                <div class="flex items-center">
+                    <div class="icon-header bg-blue-100">
+                        <i class="fas fa-chart-bar text-3xl text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-blue-700">Barra-diagrama</h2> </div>
+                
+                <div class="chart-container p-4">
+                    <canvas id="barChart"></canvas>
+                </div>
+                
+                <div class="info-card p-4">
+                    <h3 class="font-bold text-blue-600 mb-2">Zer da?</h3> <p class="text-sm mb-3">Balio bakoitzaren maiztasuna adierazten du, maiztasunarekiko proportzionala den altuera duten barren bidez.</p> <h3 class="font-bold text-blue-600 mb-2">Noiz erabili?</h3> <div class="feature-item">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <p class="text-sm">Aldagai kualitatiboetarako edo kuantitatibo diskretuetarako</p> </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <p class="text-sm">Maiztasunak zehaztasunez alderatu nahi dituzunean</p> </div>
+                    
+                    <h3 class="font-bold text-blue-600 mb-2">Nola eraiki</h3> <ul class="text-sm list-disc pl-5">
+                        <li>Ardatz horizontala (X): Aldagaiaren balioak</li> <li>Ardatz bertikala (Y): Maiztasunak</li> <li>Barrak elkarrengandik bereizita</li> </ul>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <div class="icon-header bg-purple-100">
+                        <i class="fas fa-chart-pie text-3xl text-purple-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-purple-700">Sektore-diagrama</h2> </div>
+                
+                <div class="chart-container p-4">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                
+                <div class="info-card p-4">
+                    <h3 class="font-bold text-purple-600 mb-2">Zer da?</h3> <p class="text-sm mb-3">Datuak "tarta" moduan adierazten ditu, non sektore bakoitzak bere maiztasunarekiko proportzionala den angelu bat duen.</p> <h3 class="font-bold text-purple-600 mb-2">Noiz erabili?</h3> <div class="feature-item">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <p class="text-sm">Aldagai kualitatiboetarako edo kuantitatibo diskretuetarako</p> </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <p class="text-sm">Osotasun bat (% 100) nola banatzen den erakutsi nahi duzunean</p> </div>
+                    
+                    <h3 class="font-bold text-purple-600 mb-2">Nola eraiki</h3> <ul class="text-sm list-disc pl-5">
+                        <li>Sektoretan banatutako zirkulua (pizza bat bezala)</li> <li>Sektore bakoitzaren angelua = h<sub>i</sub> × 360° </li> <li>Balioekin eta ehunekoekin legenda bat sartu</li> </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 bg-white p-4 rounded-lg shadow"> <h3 class="font-bold text-lg text-indigo-700 mb-2 text-center">Zein grafiko aukeratu?</h3> <div class="overflow-x-auto"> <table class="comparison-table w-full text-sm border-collapse">
+                    <thead> <tr>
+                            <th>Zertarako...</th> <th class="text-center text-blue-600">Barra-diagrama</th> <th class="text-center text-purple-600">Sektore-diagrama</th> </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Balioak zehaztasunez alderatzeko</td> <td class="text-center"><i class="fas fa-check-circle text-green-500"></i></td>
+                            <td class="text-center"><i class="fas fa-times-circle text-red-500"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Zati bakoitzak osotasunari egiten dion ekarpena ikusteko</td> <td class="text-center"><i class="fas fa-times-circle text-red-500"></i></td>
+                            <td class="text-center"><i class="fas fa-check-circle text-green-500"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Kategoria asko erakusteko (>7)</td> <td class="text-center"><i class="fas fa-check-circle text-green-500"></i></td>
+                            <td class="text-center"><i class="fas fa-times-circle text-red-500"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Emaitza oso garrantzitsu bat nabarmentzeko</td> <td class="text-center"><i class="fas fa-times-circle text-red-500"></i></td>
+                            <td class="text-center"><i class="fas fa-check-circle text-green-500"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adibiderako datuak
+            const labels = ['Futbola', 'Saskibaloia', 'Igeriketa', 'Atletismoa', 'Txirrindularitza']; // Itzulita
+            const data = [45, 25, 15, 8, 7];
+            
+            // Koloreen konfigurazioa
+            const backgroundColors = [
+                'rgba(59, 130, 246, 0.7)',  // Urdina
+                'rgba(139, 92, 246, 0.7)',  // Morea
+                'rgba(16, 185, 129, 0.7)',  // Berdea
+                'rgba(249, 115, 22, 0.7)',  // Laranja
+                'rgba(239, 68, 68, 0.7)'    // Gorria
+            ];
+            
+            const borderColors = [
+                'rgb(37, 99, 235)',
+                'rgb(124, 58, 237)',
+                'rgb(5, 150, 105)',
+                'rgb(234, 88, 12)',
+                'rgb(220, 38, 38)'
+            ];
+            
+            // Barra-diagrama
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Kirol gustukoenak', // Itzulita
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gelako kirol gustukoenak' // Itzulita
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Ikasle kopurua' // Itzulita
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Sektore-diagrama
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gelako kirol gustukoenak' // Itzulita
+                        },
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                    const value = context.parsed;
+                                    const percentage = ((value * 100) / total).toFixed(1) + '%';
+                                    return `${context.label}: ${value} (${percentage})`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <div class="fixed bottom-0 left-0 right-0 flex justify-between p-4 bg-gray-100 bg-opacity-80 shadow-inner z-20">
+        <a href="5.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Aurrekoa </a>
+        <a href="7.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Hurrengoa <i class="fas fa-arrow-right ml-2"></i> </a>
+    </div>
+</body>
+</html>

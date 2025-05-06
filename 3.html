@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="eu"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Populazioa eta Lagina</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0; /* Ensure no default body margin */
+            padding: 0; /* Ensure no default body padding */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f6f9fc 0%, #e0e8f5 100%);
+            /* Removed flex centering from body */
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; /* Let flex-grow handle spacing */
+            align-items: center;
+            padding: 2rem;
+        }
+        .title {
+            background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .concept-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .icon-bg {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .population-container {
+            height: 300px;
+            position: relative;
+        }
+        .person-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        .sample-highlight {
+            border: 2px dashed #EC4899;
+            border-radius: 30px;
+            position: absolute;
+            z-index: 1;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-6">
+        <h1 class="title text-4xl font-bold mb-6 text-center">Populazioa eta Lagina</h1> <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="concept-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-bg bg-blue-100">
+                        <i class="fas fa-users text-3xl text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-blue-700">Populazioa</h2> </div>
+                <p class="text-gray-700">Aztertu nahi ditugun banako edo objektu guztien multzo osoa.</p> <div class="mt-2 bg-blue-50 p-2 rounded-lg">
+                    <span class="font-semibold">Adibidea:</span> Institutuko DBHko 1. mailako ikasle guztiak </div>
+            </div>
+            
+            <div class="concept-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-bg bg-pink-100">
+                        <i class="fas fa-random text-3xl text-pink-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-pink-700">Lagina</h2> </div>
+                <p class="text-gray-700">Populazioaren zati bat edo azpimultzo bat, azterketarako hautatzen duguna.</p> <div class="mt-2 bg-pink-50 p-2 rounded-lg">
+                    <span class="font-semibold">Adibidea:</span> DBHko 1. mailako ausaz aukeratutako 20 ikasle </div>
+            </div>
+            
+            <div class="concept-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-bg bg-green-100">
+                        <i class="fas fa-user text-3xl text-green-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-green-700">Banakoa</h2> </div>
+                <p class="text-gray-700">Populazioa osatzen duten elementu bakoitza.</p> <div class="mt-2 bg-green-50 p-2 rounded-lg">
+                    <span class="font-semibold">Adibidea:</span> DBHko 1. mailako ikasle jakin bat </div>
+            </div>
+            
+            <div class="concept-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-bg bg-purple-100">
+                        <i class="fas fa-check-circle text-3xl text-purple-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-purple-700">Lagin Adierazgarria</h2> </div>
+                <p class="text-gray-700">Populazio osoaren ahalik eta antz handiena duen lagina.</p> <div class="mt-2 bg-purple-50 p-2 rounded-lg">
+                    <span class="font-semibold">Gakoa:</span> Pertsonak ausaz aukeratu (hautatua izateko aukera bera) </div>
+            </div>
+        </div>
+        
+        <h3 class="text-xl font-bold text-center mb-2">Adibide bisuala: Ikasleen altuerari buruzko azterketa</h3> <div class="concept-card p-4 relative">
+            <div class="population-container" id="populationContainer">
+                <div class="sample-highlight" id="sampleHighlight" style="width: 200px; height: 200px; left: 100px; top: 50px;"></div>
+            </div>
+            
+            <div class="flex justify-center mt-2">
+                <div class="legend-item">
+                    <div class="legend-dot bg-blue-500"></div>
+                    <span>Mutilak</span> </div>
+                <div class="legend-item">
+                    <div class="legend-dot bg-pink-500"></div>
+                    <span>Neskak</span> </div>
+                <div class="legend-item">
+                    <div class="border-2 border-pink-500 px-2 py-1 rounded-md">
+                        <span>Hautatutako lagina</span> </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded-lg mt-4 border-l-4 border-yellow-400">
+            <h3 class="text-lg font-bold text-yellow-700">Nola aukeratu lagin on bat?</h3> <ul class="list-disc pl-6">
+                <li>Ausaz hautatu (saihestu zure lagunak bakarrik aukeratzea)</li> <li>Nahikoa banako sartu (lagin oso txikia ez da fidagarria)</li> <li>Ziurtatu populazio osoa ordezkatzen duela</li> </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('populationContainer');
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+            const sampleArea = document.getElementById('sampleHighlight');
+            
+            // Lagin-eremuaren koordenatuak
+            const sampleLeft = parseInt(sampleArea.style.left);
+            const sampleTop = parseInt(sampleArea.style.top);
+            const sampleRight = sampleLeft + parseInt(sampleArea.style.width);
+            const sampleBottom = sampleTop + parseInt(sampleArea.style.height);
+            
+            // 50 "pertsona" (puntu) sortu
+            for (let i = 0; i < 50; i++) {
+                const personDot = document.createElement('div');
+                personDot.className = 'person-dot';
+                
+                // Ausazko posizioa
+                const left = Math.floor(Math.random() * (containerWidth - 20));
+                const top = Math.floor(Math.random() * (containerHeight - 20));
+                
+                // Mutila ala neska den zehaztu (ausaz)
+                const isGirl = Math.random() > 0.5;
+                
+                personDot.style.left = `${left}px`;
+                personDot.style.top = `${top}px`;
+                personDot.style.backgroundColor = isGirl ? '#EC4899' : '#3B82F6'; // Koloreak mantendu edo aldatu
+                
+                // Puntua lagin-eremuaren barruan dagoen egiaztatu
+                const isInSample = (left >= sampleLeft && left <= sampleRight && 
+                                   top >= sampleTop && top <= sampleBottom);
+                
+                // Laginean badago, nabarmendu
+                if (isInSample) {
+                    personDot.style.boxShadow = '0 0 5px rgba(0,0,0,0.5)';
+                    personDot.style.transform = 'scale(1.3)';
+                }
+                
+                container.appendChild(personDot);
+            }
+        });
+    </script>
+    <div class="fixed bottom-0 left-0 right-0 flex justify-between p-4 bg-gray-100 bg-opacity-80 shadow-inner z-20">
+        <a href="2.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Aurrekoa </a>
+        <a href="4.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Hurrengoa <i class="fas fa-arrow-right ml-2"></i> </a>
+    </div>
+</body>
+</html>

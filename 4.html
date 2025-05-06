@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="eu"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldagai Estatistikoak</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.6.0/dist/mermaid.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0; /* Ensure no default body margin */
+            padding: 0; /* Ensure no default body padding */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            /* Removed flex centering from body */
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; /* Let flex-grow handle spacing */
+            align-items: center;
+            padding: 2rem;
+        }
+        .title {
+            background: linear-gradient(90deg, #0F766E, #14B8A6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .variable-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .variable-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .icon-header {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .example-item {
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 3px;
+            font-size: 14px;
+        }
+        .diagram-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .mermaid-diagram {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-6">
+        <h1 class="title text-4xl font-bold mb-6 text-center">Aldagai Estatistikoak</h1> <div class="diagram-container mb-6">
+            <div class="mermaid-diagram">
+                <pre class="mermaid">
+                flowchart TD
+                    A[Aldagai Estatistikoak] --> B[Kualitatiboak]
+                    A --> C[Kuantitatiboak]
+                    C --> D[Diskretuak]
+                    C --> E[Jarraituak]
+                    
+                    style A fill:#0F766E,color:#fff,stroke:#0F766E,stroke-width:2px
+                    style B fill:#8B5CF6,color:#fff,stroke:#8B5CF6,stroke-width:2px
+                    style C fill:#2563EB,color:#fff,stroke:#2563EB,stroke-width:2px
+                    style D fill:#F59E0B,color:#fff,stroke:#F59E0B,stroke-width:2px
+                    style E fill:#EF4444,color:#fff,stroke:#EF4444,stroke-width:2px
+                </pre>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-3 gap-6 mb-4">
+            <div class="variable-card p-4">
+                <div class="flex items-center mb-4">
+                    <div class="icon-header bg-purple-100">
+                        <i class="fas fa-tags text-3xl text-purple-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-purple-700">Kualitatiboak</h2> </div>
+                <p class="mb-2 text-gray-700"><span class="font-bold">Zenbakien bidez adierazi ezin diren</span> kualitateak edo kategoriak deskribatzen dituzte.</p> <p class="text-sm text-gray-600 mb-2">Erantzuten diote: <span class="font-bold">nolakoa?</span></p> <div class="mt-3">
+                    <h3 class="font-semibold mb-1">Adibideak:</h3> <div class="example-item bg-purple-100 text-purple-800">Begien kolorea</div> <div class="example-item bg-purple-100 text-purple-800">Kirol gustukoena</div> <div class="example-item bg-purple-100 text-purple-800">Lanbidea</div> <div class="example-item bg-purple-100 text-purple-800">Mugikor marka</div> </div>
+            </div>
+            
+            <div class="variable-card p-4">
+                <div class="flex items-center mb-4">
+                    <div class="icon-header bg-yellow-100">
+                        <i class="fas fa-dice text-3xl text-yellow-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-yellow-700">Kuantitatibo Diskretuak</h2> </div>
+                <p class="mb-2 text-gray-700"><span class="font-bold">Balio isolatuak hartzen dituzten</span> kantitateak adierazten dituzte, normalean zenbaki osoak.</p> <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Kontatuz</span> lortzen dira. Ez dago tarteko baliorik.</p> <div class="mt-3">
+                    <h3 class="font-semibold mb-1">Adibideak:</h3> <div class="example-item bg-yellow-100 text-yellow-800">Anai-arreba kopurua</div> <div class="example-item bg-yellow-100 text-yellow-800">Golak partida batean</div> <div class="example-item bg-yellow-100 text-yellow-800">Gainditutako irakasgaiak</div> <div class="example-item bg-yellow-100 text-yellow-800">Zinemara joandako aldizk.</div> </div>
+            </div>
+            
+            <div class="variable-card p-4">
+                <div class="flex items-center mb-4">
+                    <div class="icon-header bg-red-100">
+                        <i class="fas fa-ruler text-3xl text-red-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-red-700">Kuantitatibo Jarraituak</h2> </div>
+                <p class="mb-2 text-gray-700">Tarte baten barruan <span class="font-bold">edozein balio har dezaketen</span> kantitateak adierazten dituzte.</p> <p class="text-sm text-gray-600 mb-2"><span class="font-bold">Neurtuz</span> lortzen dira. Beti daude tarteko balioak.</p> <div class="mt-3">
+                    <h3 class="font-semibold mb-1">Adibideak:</h3> <div class="example-item bg-red-100 text-red-800">Altuera (1,65 m)</div> <div class="example-item bg-red-100 text-red-800">Pisua (58,3 kg)</div> <div class="example-item bg-red-100 text-red-800">Tenperatura (22,5°C)</div> <div class="example-item bg-red-100 text-red-800">Denbora (3,7 seg)</div> </div>
+            </div>
+        </div>
+        
+        <div class="bg-teal-50 p-4 rounded-lg border-l-4 border-teal-500 shadow-sm">
+            <h3 class="text-lg font-bold text-teal-700 mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i> Nola identifikatu aldagai mota?</h3> <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="font-semibold">Galde iezaiozu zeure buruari:</p> <ul class="list-disc pl-5">
+                        <li>Ezaugarri ez-numerikoa al da? → <span class="text-purple-600 font-bold">Kualitatiboa</span></li> <li>Kontatuz lortzen da? → <span class="text-yellow-600 font-bold">Kuantitatibo Diskretua</span></li> <li>Neurtuz lortzen da? → <span class="text-red-600 font-bold">Kuantitatibo Jarraitua</span></li> </ul>
+                </div>
+                <div>
+                    <p class="font-semibold">Beste pista bat:</p> <ul class="list-disc pl-5">
+                        <li>2 eta 3 anaia-arreba artean, 2,5 egon daiteke? → Ez → <span class="text-yellow-600 font-bold">Diskretua</span></li> <li>1,70m eta 1,71m arteko altueran, 1,705m egon daiteke? → Bai → <span class="text-red-600 font-bold">Jarraitua</span></li> </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mermaid diagrama hasieratu
+            mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        });
+    </script>
+    <div class="fixed bottom-0 left-0 right-0 flex justify-between p-4 bg-gray-100 bg-opacity-80 shadow-inner z-20">
+        <a href="3.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Aurrekoa </a>
+        <a href="5.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Hurrengoa <i class="fas fa-arrow-right ml-2"></i> </a>
+    </div>
+</body>
+</html>

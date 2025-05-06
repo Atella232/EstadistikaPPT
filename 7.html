@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="eu"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurri Estatistikoak</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0; /* Ensure no default body margin */
+            padding: 0; /* Ensure no default body padding */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            /* Removed flex centering from body */
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; /* Let flex-grow handle spacing */
+            align-items: center;
+            padding: 2rem;
+        }
+        .title {
+            background: linear-gradient(90deg, #047857, #059669);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .measure-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .measure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chart-container {
+            height: 180px;
+            width: 100%;
+            position: relative;
+        }
+        .formula {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            padding: 5px 10px;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        .number-box {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 2px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #e5e7eb; /* Ertzak gehitu argitasunerako */
+        }
+        .comparison-table th { /* Goiburukoentzako estilo espezifikoa */
+            background-color: #f3f4f6; /* Atzeko plano argiagoa */
+        }
+    </style>
+</head>
+<body>
+    <div class="slide p-6">
+        <h1 class="title text-4xl font-bold mb-5 text-center">Neurri Estatistikoak</h1> <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"> <div class="measure-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-circle bg-green-100">
+                        <i class="fas fa-calculator text-2xl text-green-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-green-700">Batez bestekoa</h2> </div>
+                
+                <p class="mb-3 text-gray-700">Datu guztien <span class="font-bold">batez bestekoa</span>. Balio guztiak batu eta kopuru osoaz zatitzen dugu.</p> <div class="formula bg-green-50 border border-green-200 text-center mb-4">
+                    <span class="text-green-700 font-bold">x̄ = </span>
+                    <span class="text-green-800">
+                        <span class="border-b border-green-800">x₁ + x₂ + x₃ + ... + xₙ</span>
+                        <br>N
+                    </span>
+                </div>
+                
+                <div class="bg-green-50 p-2 rounded-lg mb-3">
+                    <p class="font-semibold">Adibidea:</p> <div class="flex items-center justify-center mt-1">
+                        <div class="number-box bg-green-200">5</div>
+                        <div class="number-box bg-green-200">8</div>
+                        <div class="number-box bg-green-200">4</div>
+                        <div class="number-box bg-green-200">9</div>
+                        <div class="number-box bg-green-200">4</div>
+                    </div>
+                    <p class="text-center mt-2">Batez bestekoa = (5+8+4+9+4) ÷ 5 = <span class="font-bold">6</span></p> </div>
+                
+                <div class="chart-container">
+                    <canvas id="mediaChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="measure-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-circle bg-blue-100">
+                        <i class="fas fa-sort-amount-down text-2xl text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-blue-700">Mediana</h2> </div>
+                
+                <p class="mb-3 text-gray-700">Datu guztiak txikienetik handienera ordenatzean <span class="font-bold">erdian justu</span> dagoen balioa.</p> <div class="formula bg-blue-50 border border-blue-200 text-center mb-4">
+                    <span class="text-blue-700 font-bold">Me = </span>
+                    <span class="text-blue-800">
+                        Erdiko balioa (N bakoitia bada)<br> Erdiko bi balioen batez bestekoa (N bikoitia bada) </span>
+                </div>
+                
+                <div class="bg-blue-50 p-2 rounded-lg mb-3">
+                    <p class="font-semibold">Adibidea (ordenatuta):</p> <div class="flex items-center justify-center mt-1">
+                        <div class="number-box bg-blue-100">4</div>
+                        <div class="number-box bg-blue-100">4</div>
+                        <div class="number-box bg-blue-300 border-2 border-blue-600">5</div>
+                        <div class="number-box bg-blue-100">8</div>
+                        <div class="number-box bg-blue-100">9</div>
+                    </div>
+                    <p class="text-center mt-2">Mediana = <span class="font-bold">5</span> (erdiko balioa)</p> </div>
+                
+                <div class="chart-container">
+                    <canvas id="medianaChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="measure-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-circle bg-purple-100">
+                        <i class="fas fa-thumbs-up text-2xl text-purple-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-purple-700">Moda</h2> </div>
+                
+                <p class="mb-3 text-gray-700"><span class="font-bold">Gehien errepikatzen den</span> balioa. Moda bat baino gehiago egon daiteke (bimodala, multimodala).</p> <div class="formula bg-purple-50 border border-purple-200 text-center mb-4">
+                    <span class="text-purple-700 font-bold">Mo = </span>
+                    <span class="text-purple-800">
+                        Maiztasun absolutu handiena duen balioa (f<sub>i</sub>) </span>
+                </div>
+                
+                <div class="bg-purple-50 p-2 rounded-lg mb-3">
+                    <p class="font-semibold">Adibidea:</p> <div class="flex items-center justify-center mt-1">
+                        <div class="number-box bg-purple-100">5</div>
+                        <div class="number-box bg-purple-100">8</div>
+                        <div class="number-box bg-purple-300 border-2 border-purple-600">4</div>
+                        <div class="number-box bg-purple-100">9</div>
+                        <div class="number-box bg-purple-300 border-2 border-purple-600">4</div>
+                    </div>
+                    <p class="text-center mt-2">Moda = <span class="font-bold">4</span> (2 aldiz agertzen da)</p> </div>
+                
+                <div class="chart-container">
+                    <canvas id="modaChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="measure-card p-4">
+                <div class="flex items-center mb-3">
+                    <div class="icon-circle bg-orange-100">
+                        <i class="fas fa-arrows-alt-h text-2xl text-orange-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold ml-3 text-orange-700">Heina</h2> </div>
+                
+                <p class="mb-3 text-gray-700"><span class="font-bold">Sakabanaketa</span> neurtzen du. Balio maximoaren eta minimoaren arteko aldea da.</p> <div class="formula bg-orange-50 border border-orange-200 text-center mb-4">
+                    <span class="text-orange-700 font-bold">Heina = </span> <span class="text-orange-800">
+                        Balio maximoa - Balio minimoa </span>
+                </div>
+                
+                <div class="bg-orange-50 p-2 rounded-lg mb-3">
+                    <p class="font-semibold">Adibidea:</p> <div class="flex items-center justify-center mt-1">
+                        <div class="number-box bg-orange-300 border-2 border-orange-600">4</div>
+                        <div class="number-box bg-orange-100">4</div>
+                        <div class="number-box bg-orange-100">5</div>
+                        <div class="number-box bg-orange-100">8</div>
+                        <div class="number-box bg-orange-300 border-2 border-orange-600">9</div>
+                    </div>
+                    <p class="text-center mt-2">Heina = 9 - 4 = <span class="font-bold">5</span></p> </div>
+                
+                <div class="chart-container">
+                    <canvas id="rangoChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-3 rounded-lg shadow mb-4 overflow-x-auto"> <h3 class="text-lg font-bold text-center text-gray-700 mb-2">Zein neurri erabili kasu bakoitzean?</h3> <table class="comparison-table w-full text-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th width="25%">Neurria</th> <th width="50%">Noiz erabili...</th> <th width="25%">Muturreko balioekiko sentikorra</th> </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-gray-200">
+                        <td class="font-bold text-green-700">Batez bestekoa</td> <td class="text-left">Banaketa simetrikoa denean, muturreko balio handirik gabe</td> <td><span class="font-bold text-red-500">Asko</span> <i class="fas fa-exclamation-circle"></i></td> </tr>
+                    <tr class="border-b border-gray-200">
+                        <td class="font-bold text-blue-700">Mediana</td> <td class="text-left">Batez bestekoa desitxuratzen duten balio oso altuak edo baxuak daudenean</td> <td><span class="font-bold text-green-500">Gutxi</span> <i class="fas fa-check-circle"></i></td> </tr>
+                    <tr>
+                        <td class="font-bold text-purple-700">Moda</td> <td class="text-left">Balio ohikoena edo arruntena jakin nahi denean. Datu kualitatiboetarako ere bai.</td> <td><span class="font-bold text-green-500">Ezer ez</span> <i class="fas fa-check-circle"></i></td> </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="bg-yellow-50 p-3 rounded-lg border-l-4 border-yellow-400">
+            <h3 class="font-bold text-sm text-yellow-800">Gogoratu!</h3> <p class="text-sm">Neurriaren aukeraketa datu motaren eta nabarmendu nahi dugunaren araberakoa da. <strong>Ez dago kasu guztietarako neurri "hoberik".</strong></p> </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adibideetarako datuak
+            const data = [4, 4, 5, 8, 9]; // Adibideetako datu berberak
+            const labels = data.map((_, index) => `Datua ${index+1}`); // Itzulita
+            
+            // Batez bestekoarentzako grafikoa
+            const mediaCtx = document.getElementById('mediaChart').getContext('2d');
+            new Chart(mediaCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Balioa', // Itzulita
+                        data: data,
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                        borderColor: 'rgb(5, 150, 105)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Batez bestekoa', // Itzulita
+                        data: Array(data.length).fill(6), // Batez bestekoa = 6
+                        type: 'line',
+                        borderColor: 'rgb(4, 120, 87)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Medianarentzako grafikoa
+            const medianaCtx = document.getElementById('medianaChart').getContext('2d');
+            new Chart(medianaCtx, {
+                type: 'bar',
+                data: {
+                    labels: ["1. datua (4)", "2. datua (4)", "3. datua (5)", "4. datua (8)", "5. datua (9)"], // Itzulita
+                    datasets: [{
+                        label: 'Balio ordenatua', // Itzulita
+                        data: [4, 4, 5, 8, 9], // Datu ordenatuak
+                        backgroundColor: function(context) {
+                            return context.dataIndex === 2 ? 'rgba(59, 130, 246, 0.8)' : 'rgba(191, 219, 254, 0.6)';
+                        },
+                        borderColor: function(context) {
+                            return context.dataIndex === 2 ? 'rgb(37, 99, 235)' : 'rgb(147, 197, 253)';
+                        },
+                        borderWidth: function(context) {
+                            return context.dataIndex === 2 ? 2 : 1;
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Modarentzako grafikoa
+            const modaCtx = document.getElementById('modaChart').getContext('2d');
+            new Chart(modaCtx, {
+                type: 'bar',
+                data: {
+                    labels: ["4 balioa", "5 balioa", "8 balioa", "9 balioa"], // Itzulita
+                    datasets: [{
+                        label: 'Maiztasuna', // Itzulita
+                        data: [2, 1, 1, 1], // Balio bakoitzaren maiztasuna
+                        backgroundColor: function(context) {
+                            return context.dataIndex === 0 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(221, 214, 254, 0.6)';
+                        },
+                        borderColor: function(context) {
+                            return context.dataIndex === 0 ? 'rgb(124, 58, 237)' : 'rgb(196, 181, 253)';
+                        },
+                        borderWidth: function(context) {
+                            return context.dataIndex === 0 ? 2 : 1;
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 3,
+                            title: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Heinarentzako grafikoa
+            const rangoCtx = document.getElementById('rangoChart').getContext('2d');
+            new Chart(rangoCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Balioa', // Itzulita
+                        data: data,
+                        backgroundColor: function(context) {
+                            return (context.raw === Math.min(...data) || context.raw === Math.max(...data)) ? 
+                                'rgba(249, 115, 22, 0.8)' : 'rgba(254, 215, 170, 0.6)';
+                        },
+                        borderColor: function(context) {
+                            return (context.raw === Math.min(...data) || context.raw === Math.max(...data)) ? 
+                                'rgb(234, 88, 12)' : 'rgb(251, 146, 60)';
+                        },
+                        borderWidth: function(context) {
+                            return (context.raw === Math.min(...data) || context.raw === Math.max(...data)) ? 2 : 1;
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: false
+                        },
+                        // Chart.js-en Annotation plugin-a ez da zuzenean onartzen hemen,
+                        // beraz, heina adierazteko beste modu bat bilatu beharko litzateke edo Chart.js-en
+                        // bertsio berriago bat erabili, plugin hori barne hartzen badu.
+                        // Oraingoz, annotation atala kenduko dugu erroreak saihesteko.
+                        /*
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 4,
+                                    yMax: 9,
+                                    borderColor: 'rgb(239, 68, 68)',
+                                    borderWidth: 2,
+                                    label: {
+                                        content: 'Heina = 5', // Itzulita
+                                        enabled: true
+                                    }
+                                }
+                            }
+                        }
+                        */
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <div class="fixed bottom-0 left-0 right-0 flex justify-between p-4 bg-gray-100 bg-opacity-80 shadow-inner z-20">
+        <a href="6.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Aurrekoa </a>
+        <a href="8.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+            Hurrengoa <i class="fas fa-arrow-right ml-2"></i> </a>
+    </div>
+</body>
+</html>
